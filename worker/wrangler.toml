@@ -9,4 +9,5 @@ OPENAI_MODEL = "meta/llama-3.1-8b-instruct"
 ALLOWED_ORIGINS = "https://hackdoger.github.io"
 PXWNU_BASE_URL = "https://api.pxwnu.sbs/v1"
 # 备用通道的模型名按该服务商实际支持的模型修改。
-PXWNU_MODEL = "gpt-4o-mini"
+PXWNU_MODEL_PRIMARY = "gpt-5.6-sol"
+PXWNU_MODEL_FALLBACK = "gpt-5.5"
