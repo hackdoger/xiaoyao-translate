@@ -13,7 +13,7 @@ npx wrangler secret put OPENAI_API_KEY
 npx wrangler deploy
 ```
 
-`OPENAI_API_KEY` 只通过 secret 配置，不要写入文件、网页或 GitHub。若使用兼容 OpenAI API 的供应商，可在 `wrangler.toml` 添加 `OPENAI_BASE_URL` 和对应模型名。
+`OPENAI_API_KEY` 只通过 secret 配置，不要写入文件、网页或 GitHub。当前默认已配置 NVIDIA OpenAI 兼容接口；如果控制台显示的模型名不同，只修改 `OPENAI_MODEL`。
 
 ## 2. 配置网页 API 地址
 
@@ -23,11 +23,11 @@ npx wrangler deploy
 const apiBase = 'https://xiaoyao-translate-api.example.workers.dev';
 ```
 
-同时将 `worker/wrangler.toml` 的 `ALLOWED_ORIGINS` 改成实际 GitHub Pages 来源。
+`worker/wrangler.toml` 已填入 `https://hackdoger.github.io`；如果 Pages 使用自定义域名，需要改成实际域名。
 
 ## 3. 发布 GitHub Pages
 
-将 `web/` 目录内容放到仓库根目录或 Pages 发布目录，在 GitHub 的 Settings → Pages 选择从分支发布。首次发布后，用 iPhone Safari 打开 HTTPS 页面。
+仓库已包含 `.github/workflows/pages.yml`。推送到 `index` 后，Actions 会把 `web/` 发布到 GitHub Pages。首次使用前，在 Settings → Pages → Source 选择 GitHub Actions。发布完成后，用 iPhone Safari 打开 Pages 地址。
 
 ## 4. iPhone 使用
 

@@ -3,7 +3,8 @@
   const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   const sourceMap = { en: 'en-US', ja: 'ja-JP', ko: 'ko-KR', fr: 'fr-FR', de: 'de-DE', es: 'es-ES' };
   const state = { running: false, recognition: null, lastSent: '', restartTimer: null };
-  const apiBase = window.XIAOYAO_API_BASE || '';
+  // Set this to the deployed Worker URL before publishing Pages.
+  const apiBase = window.XIAOYAO_API_BASE || 'https://xiaoyao-translate-api.YOUR_SUBDOMAIN.workers.dev';
   $('secureBadge').textContent = location.protocol === 'https:' ? '安全连接' : '请使用 HTTPS';
 
   function speak(text) {
@@ -25,7 +26,7 @@
     translate(clean).catch(() => $('status').textContent = '翻译失败：请检查网络或云端服务配置');
   }
   function startRecognition() {
-    if (!Recognition) { $('status').textContent = '当前浏览器不支持连续语音识别，请使用 iPhone Safari 最新版测试'; return; }
+    if (!Recognition) { $('status').textContent = '当前浏览器不支持连续语音识别，请使用 iPhone Safari 最新版测试'; state.running=false; $('startButton').disabled=false; $('stopButton').disabled=true; return; }
     const recognition = new Recognition(); state.recognition = recognition;
     recognition.lang = sourceMap[$('sourceLanguage').value]; recognition.continuous = true; recognition.interimResults = true;
     recognition.onstart = () => $('status').textContent = '正在连续听译，请保持页面前台运行';

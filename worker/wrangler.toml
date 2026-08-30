@@ -3,6 +3,7 @@ main = "src/index.js"
 compatibility_date = "2026-08-30"
 
 [vars]
-OPENAI_MODEL = "gpt-4o-mini"
-# 部署后设置为 GitHub Pages 的完整来源，例如 https://你的用户名.github.io
-ALLOWED_ORIGINS = "https://YOUR_GITHUB_USER.github.io"
+OPENAI_BASE_URL = "https://integrate.api.nvidia.com/v1"
+# 如果 NVIDIA 控制台显示的模型不同，只修改这一项。
+OPENAI_MODEL = "meta/llama-3.1-8b-instruct"
+ALLOWED_ORIGINS = "https://hackdoger.github.io"
