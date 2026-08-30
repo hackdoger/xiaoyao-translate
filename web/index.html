@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101827">
+  <title>逍遥翻译 · 单向连续听译</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header><div><p class="eyebrow">XIAOYAO TRANSLATE</p><h1>单向连续听译</h1></div><span id="secureBadge" class="badge">检查环境中</span></header>
+    <section class="card controls">
+      <label>对方语言<select id="sourceLanguage"><option value="en">英语</option><option value="ja">日语</option><option value="ko">韩语</option><option value="fr">法语</option><option value="de">德语</option><option value="es">西班牙语</option></select></label>
+      <button id="startButton" class="primary">开始听译</button>
+      <button id="stopButton" class="secondary" disabled>停止</button>
+      <p id="status" class="status">连接 AirPods 或索尼耳机后开始。请保持此页面在前台。</p>
+    </section>
+    <section class="card output"><div class="label">中文播报</div><p id="translation">等待语音输入……</p><div class="meter"><i id="meterBar"></i></div></section>
+    <section class="card transcript"><div class="label">识别原文</div><p id="source">尚未开始</p></section>
+    <p class="notice">本服务通过浏览器麦克风收音。API 密钥只应配置在云端 Worker，绝不要写入网页或提交到 GitHub。</p>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

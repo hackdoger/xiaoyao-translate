@@ -1,0 +1,9 @@
+name = "xiaoyao-translate-api"
+main = "src/index.js"
+compatibility_date = "2026-08-30"
+
+[vars]
+OPENAI_BASE_URL = "https://integrate.api.nvidia.com/v1"
+# 如果 NVIDIA 控制台显示的模型不同，只修改这一项。
+OPENAI_MODEL = "meta/llama-3.1-8b-instruct"
+ALLOWED_ORIGINS = "https://hackdoger.github.io"
