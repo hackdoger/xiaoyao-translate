@@ -18,6 +18,8 @@ npx.cmd wrangler deploy
 
 网页还提供“备用通道”，Base URL 为 `https://api.pxwnu.sbs/v1`。如需启用，请使用独立的 Worker Secret `PXWNU_API_KEY`，不要复用或暴露 NVIDIA Key。`PXWNU_MODEL` 必须改成该服务商实际支持的模型名。
 
+网页会显示“翻译通道”和“模型”两个选项。Worker 使用 `*_MODEL_PRIMARY` 与 `*_MODEL_FALLBACK`；所选模型请求失败时，会再尝试该通道的备用模型。
+
 配置备用通道：
 
 ```powershell

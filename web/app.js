@@ -5,7 +5,14 @@
   const state = { running: false, recognition: null, lastSent: '', restartTimer: null };
   // Set this to the deployed Worker URL before publishing Pages.
   const apiBase = window.XIAOYAO_API_BASE || 'https://xiaoyao-translate-api.hackdoger-xiaoyao-translate-20260830.workers.dev';
+  const modelNames = { nvidia: { primary: 'NVIDIA 主模型', fallback: 'NVIDIA 备用模型' }, pxwnu: { primary: '备用通道主模型', fallback: '备用通道备用模型' } };
   $('secureBadge').textContent = location.protocol === 'https:' ? '安全连接' : '请使用 HTTPS';
+
+  function refreshModels() {
+    const provider = $('provider').value;
+    $('modelChoice').options[0].textContent = modelNames[provider].primary;
+    $('modelChoice').options[1].textContent = modelNames[provider].fallback;
+  }
 
   function speak(text) {
     window.speechSynthesis.cancel();
@@ -14,7 +21,7 @@
     window.speechSynthesis.speak(utterance);
   }
   async function translate(text) {
-    const response = await fetch(`${apiBase}/api/translate`, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ text, source: $('sourceLanguage').value, target: 'zh', provider: $('provider').value }) });
+    const response = await fetch(`${apiBase}/api/translate`, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ text, source: $('sourceLanguage').value, target: 'zh', provider: $('provider').value, model: $('modelChoice').value }) });
     if (!response.ok) {
       const detail = await response.json().catch(() => ({}));
       throw new Error(`${response.status}:${detail.error || 'translation request failed'}`);
@@ -41,4 +48,6 @@
   $('startButton').onclick = () => { state.running=true; state.lastSent=''; $('startButton').disabled=true; $('stopButton').disabled=false; startRecognition(); };
   $('stopButton').onclick = () => { state.running=false; clearTimeout(state.restartTimer); state.recognition?.stop(); window.speechSynthesis.cancel(); $('startButton').disabled=false; $('stopButton').disabled=true; $('status').textContent='已停止'; };
   $('sourceLanguage').onchange = () => { if(state.running){ state.recognition?.stop(); } };
+  $('provider').onchange = refreshModels;
+  refreshModels();
 })();
