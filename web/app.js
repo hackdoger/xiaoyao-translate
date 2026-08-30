@@ -15,7 +15,10 @@
   }
   async function translate(text) {
     const response = await fetch(`${apiBase}/api/translate`, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ text, source: $('sourceLanguage').value, target: 'zh' }) });
-    if (!response.ok) throw new Error('translation request failed');
+    if (!response.ok) {
+      const detail = await response.json().catch(() => ({}));
+      throw new Error(`${response.status}:${detail.error || 'translation request failed'}`);
+    }
     const data = await response.json();
     if (!data.translation) throw new Error('empty translation');
     $('translation').textContent = data.translation; speak(data.translation);
@@ -23,7 +26,7 @@
   function phrase(text) {
     const clean = text.trim(); if (!clean || clean === state.lastSent) return;
     state.lastSent = clean; $('source').textContent = clean;
-    translate(clean).catch(() => $('status').textContent = '翻译失败：请检查网络或云端服务配置');
+    translate(clean).catch(error => $('status').textContent = `翻译失败（${error.message}）`);
   }
   function startRecognition() {
     if (!Recognition) { $('status').textContent = '当前浏览器不支持连续语音识别，请使用 iPhone Safari 最新版测试'; state.running=false; $('startButton').disabled=false; $('stopButton').disabled=true; return; }

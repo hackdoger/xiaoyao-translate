@@ -16,6 +16,14 @@ npx.cmd wrangler deploy
 
 `OPENAI_API_KEY` 只通过 secret 配置，不要写入文件、网页或 GitHub。当前默认已配置 NVIDIA OpenAI 兼容接口；如果控制台显示的模型名不同，只修改 `OPENAI_MODEL`。
 
+部署后可先检查 Worker（不会调用翻译接口或消耗翻译额度）：
+
+```powershell
+curl.exe "https://xiaoyao-translate-api.hackdoger-xiaoyao-translate-20260830.workers.dev/health"
+```
+
+正常应返回 `ok:true` 和 `configured:true`。如果 `configured:false`，请重新执行 `npx.cmd wrangler secret put OPENAI_API_KEY` 后再次部署。
+
 ## 2. 配置网页 API 地址
 
 Worker 已部署，当前网页端使用以下 HTTPS 地址：
