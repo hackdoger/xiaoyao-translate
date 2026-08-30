@@ -4,7 +4,7 @@
   const sourceMap = { en: 'en-US', ja: 'ja-JP', ko: 'ko-KR', fr: 'fr-FR', de: 'de-DE', es: 'es-ES' };
   const state = { running: false, recognition: null, lastSent: '', restartTimer: null };
   // Set this to the deployed Worker URL before publishing Pages.
-  const apiBase = window.XIAOYAO_API_BASE || 'https://xiaoyao-translate-api.YOUR_SUBDOMAIN.workers.dev';
+  const apiBase = window.XIAOYAO_API_BASE || 'https://xiaoyao-translate-api.hackdoger-xiaoyao-translate-20260830.workers.dev';
   $('secureBadge').textContent = location.protocol === 'https:' ? '安全连接' : '请使用 HTTPS';
 
   function speak(text) {

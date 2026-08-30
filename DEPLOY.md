@@ -18,10 +18,10 @@ npx.cmd wrangler deploy
 
 ## 2. 配置网页 API 地址
 
-部署 Worker 后，把 `web/app.js` 顶部的 `apiBase` 改成 Worker 的 HTTPS 地址，例如：
+Worker 已部署，当前网页端使用以下 HTTPS 地址：
 
 ```js
-const apiBase = 'https://xiaoyao-translate-api.example.workers.dev';
+const apiBase = 'https://xiaoyao-translate-api.hackdoger-xiaoyao-translate-20260830.workers.dev';
 ```
 
 `worker/wrangler.toml` 已填入 `https://hackdoger.github.io`；如果 Pages 使用自定义域名，需要改成实际域名。
