@@ -4,13 +4,14 @@ GitHub Pages 只能托管静态网页，不能安全保存 API Key。因此本�
 
 ## 1. 部署 Worker
 
-在安装 Wrangler 的环境执行：
+在安装 Wrangler 的环境执行。Windows PowerShell 请使用 `npx.cmd`，这样不需要修改 PowerShell 执行策略：
 
 ```bash
 cd worker
 npm install -D wrangler
-npx wrangler secret put OPENAI_API_KEY
-npx wrangler deploy
+npx.cmd wrangler login
+npx.cmd wrangler secret put OPENAI_API_KEY
+npx.cmd wrangler deploy
 ```
 
 `OPENAI_API_KEY` 只通过 secret 配置，不要写入文件、网页或 GitHub。当前默认已配置 NVIDIA OpenAI 兼容接口；如果控制台显示的模型名不同，只修改 `OPENAI_MODEL`。
