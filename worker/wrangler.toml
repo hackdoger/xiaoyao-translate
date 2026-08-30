@@ -1,0 +1,8 @@
+name = "xiaoyao-translate-api"
+main = "src/index.js"
+compatibility_date = "2026-08-30"
+
+[vars]
+OPENAI_MODEL = "gpt-4o-mini"
+# 部署后设置为 GitHub Pages 的完整来源，例如 https://你的用户名.github.io
+ALLOWED_ORIGINS = "https://YOUR_GITHUB_USER.github.io"
