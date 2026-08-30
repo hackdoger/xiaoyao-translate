@@ -17,7 +17,12 @@ export default {
     try {
       const body = await request.json();
       if (typeof body.text !== 'string' || body.text.trim().length === 0 || body.text.length > 2000) return json({ error: 'invalid text' }, 400, headers);
-      const result = await fetch(`${env.OPENAI_BASE_URL || 'https://integrate.api.nvidia.com/v1'}/chat/completions`, { method:'POST', headers:{'Authorization':`Bearer ${env.OPENAI_API_KEY}`,'Content-Type':'application/json'}, body:JSON.stringify({ model: env.OPENAI_MODEL || 'meta/llama-3.1-8b-instruct', temperature: 0, max_tokens: 500, messages:[{role:'system',content:'你是旅行现场翻译器。只输出简体中文译文，不解释，不总结，不添加原文没有的信息。'},{role:'user',content:body.text}] }) });
+      const provider = body.provider === 'pxwnu' ? 'pxwnu' : 'nvidia';
+      const baseUrl = provider === 'pxwnu' ? (env.PXWNU_BASE_URL || 'https://api.pxwnu.sbs/v1') : (env.OPENAI_BASE_URL || 'https://integrate.api.nvidia.com/v1');
+      const apiKey = provider === 'pxwnu' ? env.PXWNU_API_KEY : env.OPENAI_API_KEY;
+      const model = provider === 'pxwnu' ? (env.PXWNU_MODEL || 'gpt-4o-mini') : (env.OPENAI_MODEL || 'meta/llama-3.1-8b-instruct');
+      if (!apiKey) return json({ error: `${provider} channel is not configured` }, 503, headers);
+      const result = await fetch(`${baseUrl}/chat/completions`, { method:'POST', headers:{'Authorization':`Bearer ${apiKey}`,'Content-Type':'application/json'}, body:JSON.stringify({ model, temperature: 0, max_tokens: 500, messages:[{role:'system',content:'你是旅行现场翻译器。只输出简体中文译文，不解释，不总结，不添加原文没有的信息。'},{role:'user',content:body.text}] }) });
       if (!result.ok) return json({ error: 'upstream translation failed', upstreamStatus: result.status }, 502, headers);
       const data = await result.json();
       const translation = data.choices?.[0]?.message?.content?.trim() || '';

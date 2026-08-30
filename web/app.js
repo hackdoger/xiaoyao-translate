@@ -14,7 +14,7 @@
     window.speechSynthesis.speak(utterance);
   }
   async function translate(text) {
-    const response = await fetch(`${apiBase}/api/translate`, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ text, source: $('sourceLanguage').value, target: 'zh' }) });
+    const response = await fetch(`${apiBase}/api/translate`, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ text, source: $('sourceLanguage').value, target: 'zh', provider: $('provider').value }) });
     if (!response.ok) {
       const detail = await response.json().catch(() => ({}));
       throw new Error(`${response.status}:${detail.error || 'translation request failed'}`);

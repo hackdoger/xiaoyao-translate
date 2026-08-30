@@ -16,6 +16,15 @@ npx.cmd wrangler deploy
 
 `OPENAI_API_KEY` 只通过 secret 配置，不要写入文件、网页或 GitHub。当前默认已配置 NVIDIA OpenAI 兼容接口；如果控制台显示的模型名不同，只修改 `OPENAI_MODEL`。
 
+网页还提供“备用通道”，Base URL 为 `https://api.pxwnu.sbs/v1`。如需启用，请使用独立的 Worker Secret `PXWNU_API_KEY`，不要复用或暴露 NVIDIA Key。`PXWNU_MODEL` 必须改成该服务商实际支持的模型名。
+
+配置备用通道：
+
+```powershell
+npx.cmd wrangler secret put PXWNU_API_KEY
+npx.cmd wrangler deploy
+```
+
 部署后可先检查 Worker（不会调用翻译接口或消耗翻译额度）：
 
 ```powershell
